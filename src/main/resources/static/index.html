@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Todo</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Add Todo</h1>
+
+<form id="addTodoForm" method="post" action="/todos">
+    <label>
+        Todo:
+        <input type="text" id="todo" required>
+    </label>
+    <label>
+        Description:
+        <input type="text" id="description" required>
+    </label>
+    <label>
+        Completed:
+        <input type="checkbox" id="completed">
+    </label>
+    <button type="button" onclick="addTodo()">Add Todo</button>
+</form>
+
+<script>
+    function addTodo() {
+        const todo = document.getElementById('todo').value;
+        const description = document.getElementById('description').value;
+        const completed = document.getElementById('completed').checked;
+
+        const formData = {
+            todo,
+            description,
+            completed
+        };
+
+        // Make a POST request using fetch API
+        fetch('http://localhost:8080/todos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Todo added successfully:', data);
+            // Handle success, show a success message, or redirect the user
+        })
+        .catch(error => {
+            console.error('Error adding todo:', error);
+            // Handle errors, show an error message, etc.
+        });
+    }
+</script>
+
+</body>
+</html>
