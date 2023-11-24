@@ -9,13 +9,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.NotNull;
 
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection="todos")
-
 public class TodoDTO {
 
 	@Id
@@ -43,8 +41,17 @@ public class TodoDTO {
 	private Symbol symbol;
 	private String uniCode;
 
+	private Details details;
 
-//	getters and setters
+	public Details getDetails() {
+		return details;
+	}
+
+	public void setDetails(Details details) {
+		this.details = details;
+	}
+
+	//	getters and setters
 	public String getId() {
 		return id;
 	}

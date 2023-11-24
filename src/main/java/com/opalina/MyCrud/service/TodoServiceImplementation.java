@@ -62,24 +62,29 @@ public class TodoServiceImplementation implements TodoService {
 	public TodoDTO updateTodo(String id, TodoDTO todo) throws TodoCollectionException {
 		Optional<TodoDTO> requiredDocument = todoRepo.findById(id);
 		Optional<TodoDTO> sameNameTodo = todoRepo.findByTodo(id);
-		
+
+//		checking if the updated name already exists in todo list
 		if (sameNameTodo.isPresent()) {
 			throw new TodoCollectionException(TodoCollectionException.TodoAlreadyExists());
 		}
-		
+
 		if (requiredDocument.isPresent()) {
+//			getting required record
 			TodoDTO todoToSave = requiredDocument.get();
+
+//			updating accordingly with the inputted values,
 			todoToSave.setTodo(todo.getTodo() != null ? todo.getTodo() : todoToSave.getTodo());
 			todoToSave.setDescription(todo.getDescription() != null ? todo.getDescription() : todoToSave.getDescription());
 			todoToSave.setCompleted(todo.getCompleted() != null ? todo.getCompleted() : todoToSave.getCompleted());
 			todoToSave.setUpdatedAt(new Date(System.currentTimeMillis()));
 
-//			new (23-11)
+			//	new (23-11)
 			todoToSave.setCost(todo.getCost() != 0.0 ? todo.getCost() : todoToSave.getCost());
 			todoToSave.setTaskNumber(todo.getTaskNumber() != 0 ? todo.getTaskNumber() : todoToSave.getTaskNumber());
 			todoToSave.setUniCode(todo.getUniCode() != null ? todo.getUniCode() : todoToSave.getUniCode());
 			todoToSave.setSymbol(todo.getSymbol() != null ? todo.getSymbol() : todoToSave.getSymbol());
 
+			todoToSave.setDetails(todo.getDetails() != null ? todo.getDetails() : todoToSave.getDetails());
 			todoRepo.save(todoToSave);
 			return todoToSave;		
 			
