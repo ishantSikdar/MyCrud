@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <property name="LOGS" value="./logs" />
+
+    <!--For Console logs-->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!--  For file logs -->
+    <appender name="main-pkg" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/main-pkg/main-logger.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d %p [%t] %m%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Create new log file once a day -->
+            <fileNamePattern>
+                ${LOGS}/main-pkg/main-logger-%d{dd-MM-yyyy}.%i.log
+            </fileNamePattern>
+
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="service-pkg" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/service-pkg/service-logger.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+                %d %p [%t] %m%n
+            </Pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Create new log file once a day -->
+            <fileNamePattern>
+                ${LOGS}/service-pkg/service-logger-%d{dd-MM-yyyy}.%i.log
+            </fileNamePattern>
+
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5KB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="com.opalina.MyCrud" level="trace" additivity="false">
+        <appender-ref ref="main-pkg" />
+        <appender-ref ref="Console" />
+    </logger>
+
+    <logger name="com.opalina.MyCrud.service" level="trace" additivity="false">
+        <appender-ref ref="service-pkg" />
+        <appender-ref ref="Console" />
+    </logger>
+</configuration>

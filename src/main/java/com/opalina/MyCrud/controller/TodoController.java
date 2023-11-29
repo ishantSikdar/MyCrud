@@ -19,6 +19,7 @@ import com.opalina.MyCrud.service.TodoService;
 
 import jakarta.validation.ConstraintViolationException;
 
+
 @RestController
 public class TodoController {
 	
@@ -35,6 +36,7 @@ public class TodoController {
 	public ResponseEntity<?> getSingleTodo(@PathVariable("id") String id) {
 		try {
 			return new ResponseEntity<>(todoService.getSingleTodo(id), HttpStatus.OK);
+
 		} catch (TodoCollectionException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 		}
@@ -48,6 +50,7 @@ public class TodoController {
 			
 		} catch (ConstraintViolationException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+
 		} catch (TodoCollectionException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
 		}
@@ -57,12 +60,15 @@ public class TodoController {
 	@PutMapping("/todos/{id}")
 	public ResponseEntity<?> updateById(@PathVariable("id") String id, @RequestBody TodoDTO todo) {
 		try {
-			todoService.updateTodo(id, todo);			
+			todoService.updateTodo(id, todo);
 			return new ResponseEntity<>("Todo with ID: " + id + ", successfully updated", HttpStatus.OK);
+
 		} catch (TodoCollectionException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+
 		} catch (ConstraintViolationException e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
+
 		}
 	}
 	

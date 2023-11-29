@@ -42,14 +42,8 @@ public class TodoDTO {
 	private String uniCode;
 
 	private Details details;
+	private String[] skills;
 
-	public Details getDetails() {
-		return details;
-	}
-
-	public void setDetails(Details details) {
-		this.details = details;
-	}
 
 	//	getters and setters
 	public String getId() {
@@ -130,5 +124,21 @@ public class TodoDTO {
 
 	public void setUniCode(String uniCode) {
 		this.uniCode = uniCode;
+	}
+
+	public String[] getSkills() {
+		return skills;
+	}
+
+	public void setSkills(String[] skills) {
+		this.skills = skills;
+	}
+
+	public Details getDetails() {
+		return details;
+	}
+
+	public void setDetails(Details details) {
+		this.details = details;
 	}
 }
